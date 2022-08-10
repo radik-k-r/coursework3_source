@@ -5,6 +5,7 @@ app = Flask(__name__)
 
 
 @app.route("/")
+@app.route("/index")
 def index():
     data = get_all()
     bookmarks = get_bookmarks()
@@ -16,5 +17,10 @@ def show_posts(user_name):
     return render_template("post.html", user_name=user_name)
 
 
+@app.route("/bookmarks")
+def show_bookmarks():
+    return render_template("bookmarks.html")
+
+
 if __name__ == "__main__":
-    app.run(debug="True")
+    app.run(debug=True)
