@@ -1,5 +1,6 @@
-from flask import Flask, render_template
-from utils import get_posts_all, get_bookmarks, get_post_by_pk, get_comments, get_comments_by_post_id, get_posts_by_user
+from flask import Flask, render_template, request
+from utils import get_posts_all, get_bookmarks, get_post_by_pk, get_comments, get_comments_by_post_id, \
+    get_posts_by_user, get_posts_by_text
 
 app = Flask(__name__)
 
@@ -14,7 +15,7 @@ def homepage():
 @app.route("/post/<user_name>")
 def show_posts(user_name):
     users_post = get_posts_by_user(user_name)
-    return render_template("post.html", user_name=user_name, users_post=users_post)
+    return render_template("user-feed.html", posts=users_post)
 
 
 @app.route("/bookmarks")
@@ -36,7 +37,12 @@ def show_post(pk):
 
 @app.route("/search")
 def search_posts():
-    return render_template("search.html")
+    if request.args.get('s'):
+        posts = get_posts_by_text(request.args.get('s'))
+        return render_template("search.html", posts=posts)
+    else:
+        posts = []
+    return render_template("search.html", posts=posts)
 
 
 if __name__ == "__main__":

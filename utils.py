@@ -7,7 +7,7 @@ def get_posts_all() -> object:
         return json.loads(file.read())
 
 
-def get_comments_all() -> object:
+def get_comments_all() -> list:
     """Возвращает список словарей со вложенными комментариями"""
     with open("data/comments.json", "r", encoding="utf-8") as file:
         return json.loads(file.read())
@@ -24,21 +24,31 @@ def get_posts_by_user(user_name):
         posts = []
         for post in get_posts_all():
             if post["poster_name"] == user_name:
-                posts.append(post["content"])
-            return posts
+                posts.append(post)
+        return posts
     except ValueError:
         return "No posts by that user"
 
+def get_posts_by_text(text):
+    """Возвращает посты определенного пользователя"""
+    try:
+        posts = []
+        for post in get_posts_all():
+            if text in post['content']:
+                posts.append(post)
+        return posts
+    except ValueError:
+        return "No posts by that user"
 
 def get_comments_by_post_id(post_id):
     """Возвращает комментарии определенного поста"""
     try:
-        post = get_post_by_pk(pk)
+        #post = get_post_by_pk(post_id)
         comments = []
         for comment in get_comments_all():
-            if comment["post_id"] == post[pk]:
-                comments.append(comment["content"])
-            return comments
+            if comment['post_id'] == post_id:
+                comments.append(comment)
+        return comments
     except ValueError:
         return "No comments by that post"
 
