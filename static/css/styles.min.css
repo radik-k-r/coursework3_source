@@ -346,6 +346,10 @@ textarea {
 
 .item__descr {
 	margin-bottom: 2px
+    width: 50ch;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .item__text {
@@ -377,6 +381,7 @@ textarea {
 }
 
 .item__counter {
+	right: initial;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
